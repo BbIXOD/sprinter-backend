@@ -1,0 +1,13 @@
+model Task {
+  id String @id @default(uuid())
+  name String @unique
+  description String?
+
+  user User[]
+  board Board @relation(fields: [boardId], references: [id])
+  sprint Sprint? @relation(fields: [sprintId], references: [id])
+  
+  boardId String @unique
+  sprintId String? @unique
+
+}
