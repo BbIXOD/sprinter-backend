@@ -1,11 +1,12 @@
 model Board {
     id String @id @default(uuid())
     name String @unique
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
 
     users User[]
     tasks Task[]
     sprints Sprint[]
     memberships Membership[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }

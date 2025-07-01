@@ -3,11 +3,11 @@ model Task {
   name String @unique
   description String?
 
-  user User[]
-  board Board @relation(fields: [boardId], references: [id])
-  sprint Sprint? @relation(fields: [sprintId], references: [id])
-  
   boardId String @unique
   sprintId String? @unique
 
+  board Board @relation(fields: [boardId], references: [id])
+  sprint Sprint? @relation(fields: [sprintId], references: [id])
+  
+  user User[]
 }
