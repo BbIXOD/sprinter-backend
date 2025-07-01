@@ -6,7 +6,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
-  roles Role[]
+  memberships Membership[]
   boards Board[]
   tasks Task[]
 }

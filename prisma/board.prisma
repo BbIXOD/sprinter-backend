@@ -7,4 +7,5 @@ model Board {
     users User[]
     tasks Task[]
     sprints Sprint[]
+    memberships Membership[]
 }
