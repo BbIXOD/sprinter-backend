@@ -1,0 +1,12 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm ci
+
+COPY scripts/migrate.sh /migrate.sh
+RUN chmod +x /migrate.sh
+
+ENTRYPOINT ["/migrate.sh"]
