@@ -1,24 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { NoIdUserDto, SafeUserDto } from './dto';
+import { NoIdUserDto, SafeUserDto, UserDto } from './dto';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  getAll(): Promise<User[]> {
-    return this.prisma.user.findMany();
+  async getAll(): Promise<SafeUserDto[]> {
+    const users = await this.prisma.user.findMany();
+    return users.map(user => plainToInstance(SafeUserDto, user));
   }
 
-  async createUser(user: NoIdUserDto): Promise<SafeUserDto> {
-    console.log('creating user');
-    console.log(user);
-    const resultUserDto: SafeUserDto = { ... await this.prisma.user.create({
-      data: user,
-    }) };
-    console.log(resultUserDto);
+  async createUser(data: NoIdUserDto): Promise<SafeUserDto> {
+    const user = await this.prisma.user.create({
+      data: data,
+    });
 
-    return resultUserDto;
+    return plainToInstance(SafeUserDto, user);
+  }
+
+  async findByEmail(email: string): Promise<UserDto | null> {
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) return null;
+
+    return plainToInstance(UserDto, user);
   }
 }
