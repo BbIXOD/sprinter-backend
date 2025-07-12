@@ -1,8 +1,8 @@
 model Membership {
   id String @id @default(uuid())
-  userId String @unique
-  boardId String @unique
-  roleId String @unique
+  userId String
+  boardId String
+  roleId String
 
   user User @relation(fields: [userId], references: [id])
   board Board @relation(fields: [boardId], references: [id])

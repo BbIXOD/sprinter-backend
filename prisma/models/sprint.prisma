@@ -2,7 +2,7 @@ model Sprint {
     id String @id @default(uuid())
     name String @unique
 
-    boardId String @unique
+    boardId String
 
     board Board @relation(fields: [boardId], references: [id])
 

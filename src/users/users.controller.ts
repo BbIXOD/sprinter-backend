@@ -10,6 +10,7 @@ export class UsersController {
 
   @Get('all')
   async getAll() {
+    console.log('making user');
     const users = await this.usersService.getAll(); 
     return users.map(user => this.sanitizeUser(user));
   }
