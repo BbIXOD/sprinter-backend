@@ -10,7 +10,9 @@ export class UsersService {
 
   async getAll(): Promise<SafeUserDto[]> {
     const users = await this.prisma.user.findMany();
-    return users.map(user => plainToInstance(SafeUserDto, user));
+    return users.map((user) =>
+      plainToInstance(SafeUserDto, user, { excludeExtraneousValues: true }),
+    );
   }
 
   async createUser(data: NoIdUserDto): Promise<SafeUserDto> {
@@ -18,7 +20,19 @@ export class UsersService {
       data: data,
     });
 
-    return plainToInstance(SafeUserDto, user);
+    return plainToInstance(SafeUserDto, user, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  async findById(id: string): Promise<SafeUserDto | null> {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+
+    if (!user) return null;
+    
+    return plainToInstance(SafeUserDto, user, {
+      excludeExtraneousValues: true,
+    });
   }
 
   async findByEmail(email: string): Promise<UserDto | null> {
@@ -28,6 +42,6 @@ export class UsersService {
 
     if (!user) return null;
 
-    return plainToInstance(UserDto, user);
+    return plainToInstance(UserDto, user, { excludeExtraneousValues: true });
   }
 }

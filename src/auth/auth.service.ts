@@ -18,7 +18,7 @@ export class AuthService {
   async login(user: LoginDto): Promise<{ access_token: string }> {
     const resultUserDto = await this.usersService.findByEmail(user.email);
 
-    if (!resultUserDto || !argon.verify(user.password, resultUserDto.password)) {
+    if (!resultUserDto || !argon.verify(resultUserDto.password, user.password)) {
       throw new UnauthorizedException();
     }
 

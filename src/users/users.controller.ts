@@ -1,21 +1,30 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, UnauthorizedException, UseGuards } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import { User } from "generated/prisma";
-import { plainToInstance } from "class-transformer";
-import { SafeUserDto } from "./dto/safe-user-dto";
+import { AuthGuard } from "@nestjs/passport";
+import { Request } from "@nestjs/common";
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('all')
   async getAll() {
-    console.log('making user');
     const users = await this.usersService.getAll(); 
-    return users.map(user => this.sanitizeUser(user));
+    return users;
   }
 
-  sanitizeUser(user: User) {
-    plainToInstance(SafeUserDto, user, {excludeExtraneousValues: true})
+  @UseGuards(AuthGuard('jwt'))
+  @Get('me')
+  async getMe(@Request() req: any) {
+    const id = req.user.userId;
+    const user = this.usersService.findById(id);
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    return user;
   }
+
 }
