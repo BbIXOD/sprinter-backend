@@ -1,13 +1,19 @@
 model Task {
-  id String @id @default(uuid())
-  name String @unique
+  id          String  @id @default(uuid())
+  name        String  @unique
   description String?
+  size Int
 
-  boardId String
+  boardId  String
   sprintId String?
+  statusId String
 
-  board Board @relation(fields: [boardId], references: [id])
+  board  Board   @relation(fields: [boardId], references: [id])
   sprint Sprint? @relation(fields: [sprintId], references: [id])
-  
+  status Status  @relation(fields: [statusId], references: [id])
+
   user User[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
