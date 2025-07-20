@@ -1,4 +1,5 @@
 import { Expose } from "class-transformer"
+import { Access } from "generated/prisma"
 
 export class NoIdUserDto {
   @Expose()

@@ -1,4 +1,5 @@
 import { Expose } from "class-transformer"
+import { Access } from "generated/prisma"
 
 export class UserDto {
   @Expose()
@@ -9,4 +10,6 @@ export class UserDto {
   name: string
   @Expose()
   password: string
+  @Expose()
+  access: Access
 }

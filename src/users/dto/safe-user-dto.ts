@@ -1,4 +1,5 @@
 import { Expose } from "class-transformer";
+import { Access } from "generated/prisma";
 
 export class SafeUserDto {
   @Expose()
@@ -7,4 +8,6 @@ export class SafeUserDto {
   email: string;
   @Expose()
   name: string;
+  @Expose()
+  access: Access;
 }
