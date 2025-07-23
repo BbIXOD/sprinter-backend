@@ -8,10 +8,10 @@ import { BoardDto } from './dto/board-dto';
 export class BoardsService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async createBoard(boardSource: CreateBoardDto) {
-    console.log(boardSource);
+  async createBoard(createBoardDto: CreateBoardDto) {
+    console.log(createBoardDto);
     const board = await this.prismaService.board.create({
-      data: { ...boardSource },
+      data: { ...createBoardDto },
     });
 
     return plainToInstance(BoardDto, board, { excludeExtraneousValues: true });

@@ -1,7 +1,7 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Access } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { NoIdUserDto, SafeUserDto, UserDto } from './dto';
+import { NoIdUserDto as CreateUserDto, SafeUserDto, UserDto } from './dto';
 import { plainToInstance } from 'class-transformer';
 import { ConfigService } from '@nestjs/config';
 import * as argon from 'argon2';
@@ -45,9 +45,9 @@ export class UsersService implements OnModuleInit {
     );
   }
 
-  async createUser(data: NoIdUserDto): Promise<SafeUserDto> {
+  async createUser(createUserDto: CreateUserDto): Promise<SafeUserDto> {
     const user = await this.prisma.user.create({
-      data: { ...data, access: Access.USER },
+      data: { ...createUserDto, access: Access.USER },
     });
 
     return plainToInstance(SafeUserDto, user, {

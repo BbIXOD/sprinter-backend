@@ -7,12 +7,12 @@ import { SafeUserDto } from 'src/users/dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post('register')
-  register(@Body() request: RegisterDto): Promise<SafeUserDto> {
-    return this.authService.register(request);
+  register(@Body() registerDto: RegisterDto): Promise<SafeUserDto> {
+    return this.authService.register(registerDto);
   }
 
   @Post('login')
-  login(@Body() request: LoginDto): Promise<{ accessToken: string }> {
-    return this.authService.login(request);
+  login(@Body() loginDto: LoginDto): Promise<{ accessToken: string }> {
+    return this.authService.login(loginDto);
   }
 }
