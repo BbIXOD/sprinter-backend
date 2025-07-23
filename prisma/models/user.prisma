@@ -6,7 +6,6 @@ model User {
   access   Access
 
   memberships Membership[]
-  boards      Board[]
   tasks       Task[]
 
   createdAt DateTime @default(now())

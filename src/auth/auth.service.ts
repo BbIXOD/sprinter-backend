@@ -15,7 +15,7 @@ export class AuthService {
     return resultUserDto;
   }
 
-  async login(user: LoginDto): Promise<{ access_token: string }> {
+  async login(user: LoginDto): Promise<{ accessToken: string }> {
     const resultUserDto = await this.usersService.findByEmail(user.email);
 
     if (!resultUserDto || !argon.verify(resultUserDto.password, user.password)) {
@@ -24,7 +24,7 @@ export class AuthService {
 
     const payload = { sub: resultUserDto.id, email: resultUserDto.email };
     return {
-      access_token: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(payload),
     };
   }
 }

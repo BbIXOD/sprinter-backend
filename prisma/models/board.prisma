@@ -2,7 +2,6 @@ model Board {
     id String @id @default(uuid())
     name String @unique
 
-    users User[]
     tasks Task[]
     sprints Sprint[]
     memberships Membership[]

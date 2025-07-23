@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CommonModule } from './common/common.module';
+import { BoardsModule } from './boards/boards.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { CommonModule } from './common/common.module';
       })
     }),
     CommonModule,
+    BoardsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
