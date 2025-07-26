@@ -4,28 +4,23 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { plainToInstance } from 'class-transformer';
 import { BoardDto } from './dto/board-dto';
 import { Role } from 'generated/prisma';
+import { MembershipsService } from 'src/memberships/memberships.service';
 
 @Injectable()
 export class BoardsService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly membershipsService: MembershipsService,
+  ) {}
 
   async createBoard(createBoardDto: CreateBoardDto, userId: string) {
     const board = await this.prismaService.board.create({
       data: {
-        ...createBoardDto
-      }
-    })
-    this.prismaService.membership.create({
-      data: {
-        user: { connect: { id: userId }},
-        board: {
-          connect : {
-            id: board.id,
-          }
-        },
-        role: Role.ADMIN,
-      }
-    })
+        ...createBoardDto,
+      },
+    });
+
+    this.membershipsService.createMembership({ role: Role.ADMIN, userId, boardId: board.id});
 
     return plainToInstance(BoardDto, board, { excludeExtraneousValues: true });
   }

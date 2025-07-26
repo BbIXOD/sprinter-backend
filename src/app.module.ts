@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CommonModule } from './common/common.module';
 import { BoardsModule } from './boards/boards.module';
+import { MembershipsModule } from './memberships/memberships.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { BoardsModule } from './boards/boards.module';
     }),
     CommonModule,
     BoardsModule,
+    MembershipsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
