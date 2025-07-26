@@ -1,12 +1,16 @@
+enum Role {
+  ADMIN
+  MEMBER
+}
+
 model Membership {
   id String @id @default(uuid())
   userId String
   boardId String
-  roleId String
 
   user User @relation(fields: [userId], references: [id])
   board Board @relation(fields: [boardId], references: [id])
-  role Role @relation(fields: [roleId], references: [id])
+  role Role
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
