@@ -1,7 +1,12 @@
+import { IsEnum, IsNotEmpty, IsString } from "class-validator";
 import { Role } from "generated/prisma";
 
 export class CreateMembershipDto {
-  boardId: string;
+
+  @IsString()
+  @IsNotEmpty()
   userId: string;
+
+  @IsEnum(Role)
   role: Role;
 }

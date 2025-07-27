@@ -17,9 +17,9 @@ export class UsersService implements OnModuleInit {
     const logger = new Logger('UsersService');
     const admin = await this.prisma.user.findUnique({
       where: {
-        email: this.configService.get('ADMIN_EMAIL')
-      }
-    })
+        email: this.configService.get('ADMIN_EMAIL'),
+      },
+    });
 
     if (!!admin) {
       logger.log('Admin already exists');
@@ -73,5 +73,17 @@ export class UsersService implements OnModuleInit {
     if (!user) return null;
 
     return plainToInstance(UserDto, user, { excludeExtraneousValues: true });
+  }
+
+  async deleteUser(id: string) {
+    const user = await this.prisma.user.delete({
+      where: {
+        id,
+      },
+    });
+
+    return plainToInstance(SafeUserDto, user, {
+      excludeExtraneousValues: true,
+    });
   }
 }

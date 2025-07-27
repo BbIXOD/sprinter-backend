@@ -20,7 +20,17 @@ export class BoardsService {
       },
     });
 
-    this.membershipsService.createMembership({ role: Role.ADMIN, userId, boardId: board.id});
+    this.membershipsService.createMembership({ role: Role.ADMIN, userId }, board.id);
+
+    return plainToInstance(BoardDto, board, { excludeExtraneousValues: true });
+  }
+
+  async deleteBoard(id: string) {
+    const board = await this.prismaService.board.delete({
+      where: {
+        id,
+      },
+    });
 
     return plainToInstance(BoardDto, board, { excludeExtraneousValues: true });
   }

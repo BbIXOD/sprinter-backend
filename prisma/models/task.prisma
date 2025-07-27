@@ -8,7 +8,7 @@ model Task {
   sprintId String?
   statusId String
 
-  board  Board   @relation(fields: [boardId], references: [id])
+  board  Board   @relation(fields: [boardId], references: [id], onDelete: Cascade)
   sprint Sprint? @relation(fields: [sprintId], references: [id])
   status Status  @relation(fields: [statusId], references: [id])
 

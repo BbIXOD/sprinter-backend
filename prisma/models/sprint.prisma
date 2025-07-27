@@ -4,7 +4,7 @@ model Sprint {
 
     boardId String
 
-    board Board @relation(fields: [boardId], references: [id])
+    board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
 
     tasks Task[]
 

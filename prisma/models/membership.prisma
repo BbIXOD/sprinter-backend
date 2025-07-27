@@ -8,8 +8,8 @@ model Membership {
   userId String
   boardId String
 
-  user User @relation(fields: [userId], references: [id])
-  board Board @relation(fields: [boardId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
   role Role
 
   createdAt DateTime @default(now())

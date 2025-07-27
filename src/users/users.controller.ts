@@ -1,6 +1,5 @@
-import { Controller, Get, UnauthorizedException, UseGuards } from "@nestjs/common";
+import { Controller, Delete, Get, Param, Req, UseGuards } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import { AuthGuard } from "@nestjs/passport";
 import { Request } from "@nestjs/common";
 import { Accesses } from "./decorators";
 import { Access } from "generated/prisma";
@@ -26,6 +25,18 @@ export class UsersController {
     const user = this.usersService.findById(id);
 
     return user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  async deleteMe(@Request() req: any) {
+    const id = req.user.userId;
+    return this.usersService.deleteUser(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('me')
+  async delete(@Req() req: any) {
+    return this.usersService.deleteUser(req.user.userId);
   }
 
 }
