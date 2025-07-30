@@ -21,6 +21,7 @@ export class BoardsService {
     });
 
     this.membershipsService.createMembership({ role: Role.ADMIN, userId }, board.id);
+    this.membershipsService.createMembership({ role: Role.MEMBER, userId }, board.id);
 
     return plainToInstance(BoardDto, board, { excludeExtraneousValues: true });
   }

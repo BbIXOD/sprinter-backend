@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CommonModule } from './common/common.module';
 import { BoardsModule } from './boards/boards.module';
 import { MembershipsModule } from './memberships/memberships.module';
+import { SprintsModule } from './sprints/sprints.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { MembershipsModule } from './memberships/memberships.module';
     CommonModule,
     BoardsModule,
     MembershipsModule,
+    SprintsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

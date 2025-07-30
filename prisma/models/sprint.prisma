@@ -1,6 +1,8 @@
 model Sprint {
     id String @id @default(uuid())
     name String @unique
+    startDate DateTime
+    endDate DateTime
 
     boardId String
 
