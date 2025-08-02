@@ -1,12 +1,11 @@
 import { Body, Controller, Delete, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { MembershipsService } from './memberships.service';
 import { CreateMembershipDto } from './dto';
-import { JwtAuthGuard } from 'src/common/guards';
 import { BoardAccessGuard } from './guards/board-access.guard';
 import { BoardAccesses } from './decorators/board-access.decorator';
 import { Role } from 'generated/prisma';
 
-@UseGuards(JwtAuthGuard, BoardAccessGuard)
+@UseGuards(BoardAccessGuard)
 @Controller('boards/:boardId/memberships')
 export class MembershipsController {
   constructor(private readonly membershipsService: MembershipsService) {}

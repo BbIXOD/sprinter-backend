@@ -3,7 +3,6 @@ import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto';
 import { JwtAuthGuard } from 'src/common/guards';
 
-@UseGuards(JwtAuthGuard)
 @Controller('boards')
 export class BoardsController {
   constructor(private readonly boardsServive: BoardsService) {}

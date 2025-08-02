@@ -10,6 +10,8 @@ import { CommonModule } from './common/common.module';
 import { BoardsModule } from './boards/boards.module';
 import { MembershipsModule } from './memberships/memberships.module';
 import { SprintsModule } from './sprints/sprints.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './common/guards';
 
 @Module({
   imports: [
@@ -24,9 +26,9 @@ import { SprintsModule } from './sprints/sprints.module';
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get('JWT_SECRET'),
         signOptions: {
-          expiresIn: configService.get('JWT_EXPIRES_IN')
-        }
-      })
+          expiresIn: configService.get('JWT_EXPIRES_IN'),
+        },
+      }),
     }),
     CommonModule,
     BoardsModule,
@@ -34,6 +36,12 @@ import { SprintsModule } from './sprints/sprints.module';
     SprintsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}
