@@ -10,7 +10,7 @@ model Membership {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
-  role Role
+  roles Role[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

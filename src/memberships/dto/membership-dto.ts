@@ -9,5 +9,5 @@ export class MembershipDto {
   @Expose()
   boardId: string;
   @Expose()
-  role: Role;
+  roles: Role[];
 }

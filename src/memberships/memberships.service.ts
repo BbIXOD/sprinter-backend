@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateMembershipDto, MembershipDto } from './dto';
-import { plainToInstance } from 'class-transformer';
+import { CreateMembershipDto, UpdateMembershipDto } from './dto';
 
 @Injectable()
 export class MembershipsService {
@@ -10,7 +9,7 @@ export class MembershipsService {
   createMembership(createMembershipDto: CreateMembershipDto, boardId: string) {
     return this.prismaService.membership.create({
       data: {
-        role: createMembershipDto.role,
+        roles: createMembershipDto.roles,
         board: {
           connect: {
             id: boardId,
@@ -25,10 +24,21 @@ export class MembershipsService {
     });
   }
 
-  getMembership(id: string) {
+  updateMembership(id: string, boardId: string, updateMembershipDto: UpdateMembershipDto) {
+    return this.prismaService.membership.update({
+      where: {
+        id,
+        boardId
+      },
+      data: updateMembershipDto,
+    });
+  }
+
+  getMembership(id: string, boardId: string) {
     return this.prismaService.membership.findUnique({
       where: {
         id,
+        boardId
       },
     });
   }
@@ -41,10 +51,11 @@ export class MembershipsService {
     });
   }
 
-  deleteMembership(id: string) {
+  deleteMembership(id: string, boardId: string) {
     return this.prismaService.membership.delete({
       where: {
         id,
+        boardId,
       },
     });
   }

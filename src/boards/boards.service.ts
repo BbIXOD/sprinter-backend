@@ -18,8 +18,10 @@ export class BoardsService {
       },
     });
 
-    this.membershipsService.createMembership({ role: Role.ADMIN, userId }, board.id);
-    this.membershipsService.createMembership({ role: Role.MEMBER, userId }, board.id);
+    this.membershipsService.createMembership(
+      { roles: [Role.ADMIN, Role.MEMBER], userId },
+      board.id,
+    );
 
     return board;
   }
