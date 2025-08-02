@@ -16,8 +16,11 @@ export class BoardAccessGuard implements CanActivate {
     if (!userId || !boardId) return false;
 
     const role = this.reflector.get<Role>(BoardAccesses, context.getHandler());
-    const memberships = await this.membershipService.getMemberships({userId, boardId});
+    const membership = (await this.membershipService.getMemberships({userId, boardId}))[0];
 
-    return memberships.some(m => m.role == role);
+
+    if (!membership) return false;
+
+    return membership.roles.includes(role);
   }
 }

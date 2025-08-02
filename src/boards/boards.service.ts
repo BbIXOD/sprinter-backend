@@ -18,10 +18,10 @@ export class BoardsService {
       },
     });
 
-    this.membershipsService.createMembership(
+    console.log(await this.membershipsService.createMembership(
       { roles: [Role.ADMIN, Role.MEMBER], userId },
       board.id,
-    );
+    ));
 
     return board;
   }
