@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBoardDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { plainToInstance } from 'class-transformer';
-import { BoardDto } from './dto/board-dto';
 import { Role } from 'generated/prisma';
 import { MembershipsService } from 'src/memberships/memberships.service';
 
@@ -23,16 +21,14 @@ export class BoardsService {
     this.membershipsService.createMembership({ role: Role.ADMIN, userId }, board.id);
     this.membershipsService.createMembership({ role: Role.MEMBER, userId }, board.id);
 
-    return plainToInstance(BoardDto, board, { excludeExtraneousValues: true });
+    return board;
   }
 
-  async deleteBoard(id: string) {
-    const board = await this.prismaService.board.delete({
+  deleteBoard(id: string) {
+    return this.prismaService.board.delete({
       where: {
         id,
       },
     });
-
-    return plainToInstance(BoardDto, board, { excludeExtraneousValues: true });
   }
 }

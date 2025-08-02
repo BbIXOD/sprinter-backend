@@ -8,14 +8,14 @@ import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthService {
   constructor(private readonly usersService: UsersService, private readonly jwtService: JwtService) {}
-  async register(registerDto: RegisterDto): Promise<SafeUserDto> {
+  async register(registerDto: RegisterDto) {
     const { password, ...rest } = registerDto;
     const hash = await argon.hash(password);
     const user = await this.usersService.createUser({password: hash, ...rest } as NoIdUserDto);
     return user;
   }
 
-  async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
+  async login(loginDto: LoginDto) {
     const resultUserDto = await this.usersService.findByEmail(loginDto.email);
 
     if (!resultUserDto || !argon.verify(resultUserDto.password, loginDto.password)) {

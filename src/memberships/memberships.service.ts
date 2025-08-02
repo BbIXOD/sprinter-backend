@@ -7,8 +7,8 @@ import { plainToInstance } from 'class-transformer';
 export class MembershipsService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async createMembership(createMembershipDto: CreateMembershipDto, boardId: string) {
-    const membership = await this.prismaService.membership.create({
+  createMembership(createMembershipDto: CreateMembershipDto, boardId: string) {
+    return this.prismaService.membership.create({
       data: {
         role: createMembershipDto.role,
         board: {
@@ -23,37 +23,29 @@ export class MembershipsService {
         },
       },
     });
-
-    return plainToInstance(MembershipDto, membership, { excludeExtraneousValues: true });
   }
 
-  async getMembership(id: string) {
-    const membership = await this.prismaService.membership.findUnique({
+  getMembership(id: string) {
+    return this.prismaService.membership.findUnique({
       where: {
         id,
       },
     });
-    return plainToInstance(MembershipDto, membership);
   }
 
-  async getMemberships(selectors: {userId?: string, boardId?: string}) {
-    const memberships = await this.prismaService.membership.findMany({
+  getMemberships(selectors: {userId?: string, boardId?: string}) {
+    return this.prismaService.membership.findMany({
       where: {
         ...selectors
       }
     });
-
-    return memberships.map(m => plainToInstance(MembershipDto, m, { excludeExtraneousValues: true }));
   }
 
-  async deleteMembership(id: string) {
-    const membership = await this.prismaService.membership.delete({
+  deleteMembership(id: string) {
+    return this.prismaService.membership.delete({
       where: {
         id,
       },
     });
-
-    return plainToInstance(MembershipDto, membership, { excludeExtraneousValues: true });
   }
-
 }

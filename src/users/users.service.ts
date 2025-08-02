@@ -38,52 +38,32 @@ export class UsersService implements OnModuleInit {
     logger.log('Admin created');
   }
 
-  async getAll(): Promise<SafeUserDto[]> {
-    const users = await this.prisma.user.findMany();
-    return users.map((user) =>
-      plainToInstance(SafeUserDto, user, { excludeExtraneousValues: true }),
-    );
+  getAll() {
+    return this.prisma.user.findMany();
   }
 
-  async createUser(createUserDto: CreateUserDto): Promise<SafeUserDto> {
-    const user = await this.prisma.user.create({
+  createUser(createUserDto: CreateUserDto){
+    return this.prisma.user.create({
       data: { ...createUserDto, access: Access.USER },
     });
-
-    return plainToInstance(SafeUserDto, user, {
-      excludeExtraneousValues: true,
-    });
   }
 
-  async findById(id: string): Promise<SafeUserDto | null> {
-    const user = await this.prisma.user.findUnique({ where: { id } });
+  findById(id: string){
+    return this.prisma.user.findUnique({ where: { id } });
 
-    if (!user) return null;
-
-    return plainToInstance(SafeUserDto, user, {
-      excludeExtraneousValues: true,
-    });
   }
 
-  async findByEmail(email: string): Promise<UserDto | null> {
-    const user = await this.prisma.user.findUnique({
+  findByEmail(email: string) {
+    return this.prisma.user.findUnique({
       where: { email },
     });
-
-    if (!user) return null;
-
-    return plainToInstance(UserDto, user, { excludeExtraneousValues: true });
   }
 
-  async deleteUser(id: string) {
-    const user = await this.prisma.user.delete({
+  deleteUser(id: string) {
+    return this.prisma.user.delete({
       where: {
         id,
       },
-    });
-
-    return plainToInstance(SafeUserDto, user, {
-      excludeExtraneousValues: true,
     });
   }
 }

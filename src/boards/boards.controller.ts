@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto';
-import { JwtAuthGuard } from 'src/common/guards';
+import { TransformTo } from 'src/common/decorators';
+import { BoardDto } from './dto/board-dto';
 
+@TransformTo(BoardDto)
 @Controller('boards')
 export class BoardsController {
   constructor(private readonly boardsServive: BoardsService) {}

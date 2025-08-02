@@ -1,10 +1,13 @@
-import { Controller, Delete, Get, Param, Req, UseGuards } from "@nestjs/common";
+import { Controller, Delete, Get, Req, UseGuards } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { Request } from "@nestjs/common";
 import { Accesses } from "./decorators";
 import { Access } from "generated/prisma";
 import { AccessGuard } from "./guards";
+import { TransformTo } from "src/common/decorators";
+import { SafeUserDto } from "./dto";
 
+@TransformTo(SafeUserDto)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

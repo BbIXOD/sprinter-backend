@@ -1,10 +1,12 @@
 import { Body, Controller, Delete, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { MembershipsService } from './memberships.service';
-import { CreateMembershipDto } from './dto';
+import { CreateMembershipDto, MembershipDto } from './dto';
 import { BoardAccessGuard } from './guards/board-access.guard';
 import { BoardAccesses } from './decorators/board-access.decorator';
 import { Role } from 'generated/prisma';
+import { TransformTo } from 'src/common/decorators';
 
+@TransformTo(MembershipDto)
 @UseGuards(BoardAccessGuard)
 @Controller('boards/:boardId/memberships')
 export class MembershipsController {
