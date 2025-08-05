@@ -12,6 +12,8 @@ import { MembershipsModule } from './memberships/memberships.module';
 import { SprintsModule } from './sprints/sprints.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './common/guards';
+import { TasksModule } from './tasks/tasks.module';
+import { StatusesModule } from './statuses/statuses.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { JwtAuthGuard } from './common/guards';
     BoardsModule,
     MembershipsModule,
     SprintsModule,
+    TasksModule,
+    StatusesModule,
   ],
   controllers: [AppController],
   providers: [
