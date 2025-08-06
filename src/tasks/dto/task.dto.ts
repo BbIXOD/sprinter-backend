@@ -15,8 +15,8 @@ export class TaskDto {
   statusId: string;
   @Expose()
   sprintId?: string;
-  @Expose()
-  userIds: string[];
+  // @Expose()
+  // userIds: string[];
   @Expose()
   createdAt: string;
   @Expose()

@@ -1,8 +1,7 @@
-import { Body, Controller, Delete, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { BoardsService } from './boards.service';
-import { CreateBoardDto } from './dto';
+import { BoardDto, CreateBoardDto, UpdateBoardDto } from './dto';
 import { TransformTo } from 'src/common/decorators';
-import { BoardDto } from './dto/board-dto';
 
 @TransformTo(BoardDto)
 @Controller('boards')
@@ -10,12 +9,27 @@ export class BoardsController {
   constructor(private readonly boardsServive: BoardsService) {}
 
   @Post()
-  createBoard(@Body() createBoardDto: CreateBoardDto, @Req() req: any) {
-    return this.boardsServive.createBoard(createBoardDto, req.user.userId);
+  create(@Body() createBoardDto: CreateBoardDto, @Req() req: any) {
+    return this.boardsServive.create(createBoardDto, req.user.userId);
+  }
+
+  @Get()
+  findAll() {
+    return this.boardsServive.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.boardsServive.findOne(id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateBoardDto: UpdateBoardDto) {
+    return this.boardsServive.update(id, updateBoardDto);
   }
 
   @Delete(':id')
-  deleteBoard(@Param('id') id: string) {
-    return this.boardsServive.deleteBoard(id);
+  delete(@Param('id') id: string) {
+    return this.boardsServive.delete(id);
   }
 }

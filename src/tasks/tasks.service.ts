@@ -46,12 +46,18 @@ export class TasksService {
   }
 
   update(id: string, updateTaskDto: UpdateTaskDto, boardId: string) {
+    const { userIds, sprintId, statusId, ...rest } = updateTaskDto;
     return this.prismaService.task.update({
       where: {
         id: id,
         boardId,
       },
-      data: updateTaskDto,
+      data: {
+        ...rest,
+        ...(sprintId && { sprint: { connect: { id: sprintId } } }),
+        ...(statusId && { status: { connect: { id: statusId } } }),
+        ...(userIds && { users: { set: userIds.map((id) => ({ id })) } }),
+      }
     });
   }
 

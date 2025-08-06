@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateBoardDto } from './dto';
+import { CreateBoardDto, UpdateBoardDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Role } from 'generated/prisma';
 import { MembershipsService } from 'src/memberships/memberships.service';
@@ -11,7 +11,7 @@ export class BoardsService {
     private readonly membershipsService: MembershipsService,
   ) {}
 
-  async createBoard(createBoardDto: CreateBoardDto, userId: string) {
+  async create(createBoardDto: CreateBoardDto, userId: string) {
     const board = await this.prismaService.board.create({
       data: {
         ...createBoardDto,
@@ -26,7 +26,31 @@ export class BoardsService {
     return board;
   }
 
-  deleteBoard(id: string) {
+  findAll() {
+    return this.prismaService.board.findMany();
+  }
+
+  findOne(id: string) {
+    return this.prismaService.board.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  update(id: string, updateBoardDto: UpdateBoardDto) {
+    return this.prismaService.board.update({
+      where: {
+        id,
+      },
+      data: {
+        ...updateBoardDto,
+      },
+    });
+  }
+
+
+  delete(id: string) {
     return this.prismaService.board.delete({
       where: {
         id,
