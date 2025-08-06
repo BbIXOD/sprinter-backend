@@ -3,6 +3,7 @@ model Task {
   name        String  @unique
   description String?
   size Int
+  priority Int
 
   boardId  String
   sprintId String?
@@ -12,7 +13,7 @@ model Task {
   sprint Sprint? @relation(fields: [sprintId], references: [id])
   status Status  @relation(fields: [statusId], references: [id])
 
-  user User[]
+  users User[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

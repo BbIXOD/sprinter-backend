@@ -1,26 +1,66 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateTaskDto, UpdateTaskDto } from './dto';
 
 @Injectable()
 export class TasksService {
-  create(createTaskDto: CreateTaskDto) {
-    return 'This action adds a new task';
+  constructor(private readonly prismaService: PrismaService) {}
+  create(createTaskDto: CreateTaskDto, boardId: string) {
+    const { userIds, sprintId, statusId, ...rest } = createTaskDto;
+    const data = rest as typeof rest & { sprint?: { connect: { id: string } } };
+
+    return this.prismaService.task.create({
+      data: {
+        board: {
+          connect: {
+            id: boardId,
+          },
+        },
+        status: {
+          connect: {
+            id: statusId,
+          },
+        },
+        users: {
+          connect: userIds.map((id) => ({ id })),
+        },
+        ...data,
+        ...(sprintId && { sprint: { connect: { id: sprintId } } }),
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all tasks`;
+  findAll(boardId: string) {
+    return this.prismaService.task.findMany({
+      where: { boardId },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} task`;
+  findOne(id: string, boardId: string) {
+    return this.prismaService.task.findUnique({
+      where: {
+        id: id,
+        boardId,
+      },
+    });
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
+  update(id: string, updateTaskDto: UpdateTaskDto, boardId: string) {
+    return this.prismaService.task.update({
+      where: {
+        id: id,
+        boardId,
+      },
+      data: updateTaskDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} task`;
+  remove(id: string, boardId: string) {
+    return this.prismaService.task.delete({
+      where: {
+        id: id,
+        boardId,
+      },
+    });
   }
 }
