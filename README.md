@@ -75,3 +75,11 @@ _since project is in development it is not 100% stable_
 ## API test with Insomnia
 
 Here you can find [insomnia collection](insomnia-requests.yaml)
+
+## Future plans
+
+- Include relationships in response jsons
+- Use swagger for api documentation
+- Include tests (with supertest)
+- Switch to faster backend like Fastify
+- File uploads for attachments
