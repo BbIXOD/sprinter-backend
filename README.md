@@ -69,5 +69,9 @@ You will need npm installed and run:
 
 ## Demo
 
-You can find [hosted demo](https://sprinter-backend.onrender.com)
+Here you can find [hosted demo](https://sprinter-backend.onrender.com)
 _since project is in development it is not 100% stable_
+
+## API test with Insomnia
+
+Here you can find [insomnia collection](insomnia-requests.yaml)
