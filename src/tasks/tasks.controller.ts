@@ -8,7 +8,7 @@ import { Role } from 'generated/prisma';
 
 @TransformTo(TaskDto)
 @UseGuards(BoardAccessGuard)
-@Controller('boards/:boardId/statuss')
+@Controller('boards/:boardId/tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 

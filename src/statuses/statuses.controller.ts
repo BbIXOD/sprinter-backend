@@ -8,7 +8,7 @@ import { Role } from 'generated/prisma';
 
 @TransformTo(StatusDto)
 @UseGuards(BoardAccessGuard)
-@Controller('boards/:boardId/statuss')
+@Controller('boards/:boardId/statuses')
 export class StatusesController {
   constructor(private readonly statusesService: StatusesService) {}
 
